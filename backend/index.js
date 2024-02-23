@@ -11,7 +11,8 @@ import reviewRoute from "./Routes/review.js";
 
 
 
-dotenv.config()
+dotenv.config();
+console.log("envsectredt", process.env.JWT_SECRET_KEY, process.env.PORT);
 
 const app = express()  
 const port = process.env.PORT || 8000
