@@ -3,7 +3,7 @@ import Doctor from '../models/DoctorSchema.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
-const generateToken = user=>{
+const generateToken = (user)=>{
     console.log(process.env.jwt)
     return jwt.sign(
         {id:user._id, role:user.role},     
@@ -47,7 +47,7 @@ export const register = async (req, res) => {
             password:hashPassword,
             photo,
             gender,
-            role
+            role,
         })
      }
 
@@ -99,7 +99,7 @@ export const login = async (req, res) => {
         if(doctor){
             user=doctor
         }
-      console.log(user)
+        console.log("user is here", user);
         //check if user exist or not 
         if (!user) {
             return res.status(404).json({ message: "User not found"});

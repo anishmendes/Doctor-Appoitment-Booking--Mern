@@ -1,4 +1,4 @@
-import BookingSchema from "../models/BookingSchema.js";
+import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 
 export const updateDoctor = async(req,res)=>{

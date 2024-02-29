@@ -114,7 +114,7 @@ export const getAllUser = async(req,res)=>{
 
         res.status(200).json({success:true, message:'Appointments are getting', data:doctors})
 
-    } catch (error) {
+    } catch (error) {  
         res.status(500).json({success:false, message:"Something went wrong cannot get" });
     }
  }

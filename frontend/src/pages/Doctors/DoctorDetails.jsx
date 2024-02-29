@@ -1,42 +1,70 @@
 import React, { useState } from "react";
-import doctorImg from '../../assets/images/doctor-img02.png';
+import { useParams } from "react-router-dom"
 import starIcon from '../../assets/images/Star.png';
 import DoctorAbout from "./DoctorAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
+import { BASE_URL } from './../../config';
+import useFetchData from './../../hooks/useFetchData';
+import Loader from '../../components/Loader/Loading'
+import Error from '../../components/Error/Error'
 
 
 const DoctorDetails = () => {
-  const [tab, setTab] = useState('about'); 
+  const [tab, setTab] = useState('about');   
+
+  const {id} = useParams()
+
+  const {data, loading, error} = useFetchData(`${BASE_URL}/doctors/${id}`)
+
+   const {
+    name,
+    qualifications,
+    experiences,
+    timeSlots,
+    bio,
+    about,
+    averageRating,
+    totalRating,
+    specialization,
+    ticketPrice,
+    photo,
+   } = data;
+
+   console.log(data, "this is our doctor")
 
   return (
     <section>
-      <div className="max-w-[1170px] mx-10">
-        <div className="grid md:grid-cols-3 gap-[50px]">
+      <div className="max-w-[1170px] px-5 mx-auto ">
+
+      {loading && <Loader/>}
+       {error && <Error/>}
+
+        { !loading && !error &&(<div className="grid md:grid-cols-3 gap-[50px]">
           <div className="md:col-span-2">
             <div className="flex items-center gap-5">
               <figure className="max-w-[200px] max-h-[200px]">
-                <img src={doctorImg} alt="" />
+                <img src={photo} alt="" />
               </figure>
 
               <section className="mt-[50px]">
                 <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-3 text-sm lg:py-2 lg:px-4 text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold rounded mr-4">
-                  Surgeon
+                {specialization}
                 </span>
-                <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">Anish Mainali</h3>
+                <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">{name}</h3>
 
                 <section className="flex mt-[-12px] flex-row gap-0">
                   <span className="flex items-center mt-[-20px] gap-[6px] text-[14px] leading lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
-                    <img src={starIcon} alt="" /> 4.8
+                    <img src={starIcon} alt="" /> {averageRating}
                   </span>
                   <span className="flex text-[14px] mt-[-12px] leading lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                    (272)
+                    ({totalRating})
                   </span>
                   <br />
                 </section>
 
                 <p className="text__para text-[14px] mt-[-20px] leading-5 md:text-[15px] lg:max-w-[390px]">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perspiciatis, laboriosam!
+                 {bio}
                 </p>
               </section>
 
@@ -63,19 +91,22 @@ const DoctorDetails = () => {
 
           
 
-              <div className="mt-[10px]">
+              <div className="mt-[50px]">
                     {
-                        tab ==='about' && <DoctorAbout/>
+                        tab ==='about' && <DoctorAbout name={name}  about={about} qualifications={qualifications} experiences={experiences}          />
                     }
                     {
-                        tab ==='feedback' && <Feedback/>
+                        tab ==='feedback' && <Feedback    reviews={reviews} totalRating={totalRating}             />
                     }
               </div>
             </div>
             <div>
-              <SidePanel/>
+              <SidePanel doctorId={doctor.id} ticketPrice={ticketPrice} timeSlots={timeSlots} />
             </div>
-          </div>
+
+
+
+          </div>)}
         </div>
      
     </section>
