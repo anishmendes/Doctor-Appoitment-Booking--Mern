@@ -1,14 +1,14 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import starIcon from '../../assets/images/Star.png';
 import { Link } from 'react-router-dom';
 import { BsArrowRight } from 'react-icons/bs';
 
-const DoctorCard = ({ doctor,key }) => {
+const DoctorCard = ({ doctor }) => {
     const {
         name, avgRating, totalRating, photo, specialization, experiences} = doctor;
 
     return (
-        <div key={key} className="p-3 lg:p-5">  
+        <div className="p-3 lg:p-5">  
   <img src={photo} className="w-full" alt={name} />
 
   <h2 className="text-[18px] leading-10 lg:text-[26px] lg:leading-9 text-headingColor font-700 mt-3 lg:mt-5">
